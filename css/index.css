@@ -10,6 +10,10 @@ body.modal-open {
     overflow: hidden;
 }
 
+.hidden {
+    display: none;
+}
+
 .search-form {
     top: 3em;
     display: flex;
@@ -87,9 +91,6 @@ img {
     z-index: 1;
 }
 
-.detail.hidden {
-    display: none;
-}
 
 .detail-modal {
     position: relative;
@@ -100,7 +101,7 @@ img {
     border-radius: 5px;
 }
 
-.detail-modal video {
+video {
     width: 94%;
     display: block;
     margin: 0 auto;

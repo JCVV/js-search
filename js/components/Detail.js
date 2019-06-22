@@ -33,9 +33,16 @@ export default class Detail{
     resetData() {
         this.title.textContent = 'Loading...';
         this.description.textContent = '';
+        this.player.classList.add('hidden');
     }
 
     setData(title, description) {
+        this.title.textContent = title;
+        this.description.textContent = description;
+        this.player.classList.remove('hidden');
+    }
+
+    setErrorData() {
         this.title.textContent = title;
         this.description.textContent = description;
     }
