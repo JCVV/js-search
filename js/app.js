@@ -15,10 +15,6 @@ const searchData = {
     total: 0
 }
 
-function initApp() {
-    addListeners();
-}
-
 function addListeners() {
 
     form.addEventListener('submit', (event) => {
@@ -79,4 +75,4 @@ function displayMovies(movies) {
     });
 }
 
-initApp();
+addListeners();

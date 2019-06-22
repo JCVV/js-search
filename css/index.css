@@ -30,8 +30,26 @@ body.modal-open {
 
 .search-form button {
     flex: 1 0;
+    font-size: 1.7em;
     margin-left: 20px;
 }
+
+@media (max-width: 450px) {
+    .search-form {
+        display: block;
+    }
+    .search-form input {
+        padding: 0.35em 0.75em;
+        font-size: 1.2em;
+        width: 100%;
+    }
+    
+    .search-form button {
+        width: 100%;
+        margin-left: 0px;
+    }
+    
+  }
 
 .movies-grid {
   display: grid;

@@ -1,3 +1,5 @@
+const ERROR_IMG = 'assets/placeholder.png';
+
 export default class Poster{
     constructor(image) {
         this.image = image;
@@ -9,7 +11,7 @@ export default class Poster{
         poster.src = this.image;
         
         poster.addEventListener('error', function() {
-            poster.src = 'assets/placeholder.png';
+            poster.src = ERROR_IMG;
             console.log('error loading image');
         });
 

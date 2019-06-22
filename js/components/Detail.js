@@ -4,10 +4,7 @@ export default class Detail{
         this.closeButton = element.querySelector('.close-button');
         this.title = element.querySelector('.title');
         this.description = element.querySelector('.description');
-
         this.player = element.querySelector('#player');
-        console.log('playeeeeeer:');
-        console.log(this.player);
 
         this.setListeners();
     }
