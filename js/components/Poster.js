@@ -3,14 +3,19 @@ export default class Poster{
         this.image = image;
     }
 
-    render() {
+    getElement() {
         const poster = new Image();
 
         poster.src = this.image;
+        
         poster.addEventListener('error', function() {
             poster.src = 'assets/placeholder.png';
             console.log('error loading image');
-        })
+        });
+
+        poster.addEventListener('load', function() {
+            poster.classList.add('loaded');
+        });
 
         return poster;
     }

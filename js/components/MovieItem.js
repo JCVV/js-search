@@ -7,9 +7,9 @@ export default class MovieItem{
         this.title = title;
     }
 
-    render() {
+    getElement() {
         const item = document.createElement('div');
-        const poster = new Poster(this.image).render();
+        const poster = new Poster(this.image).getElement();
         const title = document.createElement('div');
 
         item.dataset.id = this.id;

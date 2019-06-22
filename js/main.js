@@ -1,10 +1,13 @@
 import api from './api.js';
 import MovieItem from './components/MovieItem.js';
+import Detail from './components/Detail.js';
 
 const form = document.querySelector('.search-form');
 const input = document.querySelector('.search-input');
 const moviesContainer = document.querySelector('.movies-grid');
 const loader = document.querySelector('.loader');
+const detail = document.querySelector('.detail');
+const detailModal = new Detail(detail);
 
 const searchData = {
     query: '',
@@ -12,45 +15,53 @@ const searchData = {
     total: 0
 }
 
-form.addEventListener('submit', (event) => {
-    const query = input.value;
+function initApp() {
+    addListeners();
+}
 
-    searchData.query = query;
-    searchData.page = 1;
-    searchData.total = 0;
+function addListeners() {
 
-    event.preventDefault();
+    form.addEventListener('submit', (event) => {
+        const query = input.value;
 
-    moviesContainer.innerHTML = '';
-    loader.style.display = 'block';
-    
-    searchMovies(query);
-});
+        searchData.query = query;
+        searchData.page = 1;
+        searchData.total = 0;
 
-moviesContainer.addEventListener('click', (event) => {
-    const target = event.target;
-    const movieId = target.dataset.id;
+        event.preventDefault();
 
-    api.getMovieInfo(movieId)
-        .then((data) => {
-            console.log(data);
-        });
-});
+        moviesContainer.innerHTML = '';
+        loader.style.display = 'block';
 
-window.addEventListener('scroll', function(event) {
-    
-  var d = document.documentElement;
-  var offset = d.scrollTop + window.innerHeight;
-  var height = d.offsetHeight;
+        searchMovies(query);
+    });
 
-  console.log('offset = ' + offset);
-  console.log('height = ' + height);
+    moviesContainer.addEventListener('click', (event) => {
+        const target = event.target;
+        const movieId = target.dataset.id;
 
-  if (offset >= height - 100) {
-      searchData.page += 1;
-      searchMovies(searchData.query, searchData.page);
-  }
-});
+        detailModal.open();
+        api.getMovieInfo(movieId)
+            .then((data) => {
+                detailModal.setData(data.Title, data.Plot);
+                console.log(data);
+            });
+    });
+
+    window.addEventListener('scroll', function (event) {
+        const d = document.documentElement;
+        const offset = d.scrollTop + window.innerHeight;
+        const height = d.offsetHeight;
+
+        console.log('offset = ' + offset);
+        console.log('height = ' + height);
+
+        if (offset >= height - 100) {
+            searchData.page += 1;
+            searchMovies(searchData.query, searchData.page);
+        }
+    });
+}
 
 function searchMovies(query, page = 1) {
     api.gethMovies(query, page)
@@ -64,10 +75,8 @@ function displayMovies(movies) {
     movies.forEach(({ imdbID: id, Poster: image, Title: title }) => {
         const item = new MovieItem(id, image, title);
 
-        moviesContainer.appendChild(item.render());
+        moviesContainer.appendChild(item.getElement());
     });
 }
 
-//TODO: REMOVE THIS;
-
-searchMovies('x-men');
+initApp();

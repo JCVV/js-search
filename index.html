@@ -9,9 +9,10 @@
         <title>Vanilla Test</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script type="module" src="js/main.js" async defer></script>
         <link rel="stylesheet" href="css/index.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <script type="module" src="js/main.js" async defer></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap">
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -24,9 +25,21 @@
             </form>
         </section>
         
+        <section class="detail detail-overlay hidden">
+            <div class="detail-modal">
+                <i class="fa fa-times close-button"></i>
+                <video id="player" src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" controls ></video>
+                <div class="metadata">
+                    <h2 class="title">Titulo</h2>
+                    <div class="description">Descripcion bla bla bla</div>
+                </div>
+            </div>
+        </section>
+
         <section class="movies-grid">
             
         </section>
+        
         <img class="loader" src="assets/loading.gif">
     </body>
 </html>
