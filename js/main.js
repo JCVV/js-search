@@ -6,17 +6,24 @@ const input = document.querySelector('.search-input');
 const moviesContainer = document.querySelector('.movies-grid');
 const loader = document.querySelector('.loader');
 
-const searchResults = {
+const searchData = {
     query: '',
-    page: 0,
+    page: 1,
     total: 0
 }
 
 form.addEventListener('submit', (event) => {
     const query = input.value;
 
+    searchData.query = query;
+    searchData.page = 1;
+    searchData.total = 0;
+
     event.preventDefault();
+
+    moviesContainer.innerHTML = '';
     loader.style.display = 'block';
+    
     searchMovies(query);
 });
 
@@ -30,10 +37,24 @@ moviesContainer.addEventListener('click', (event) => {
         });
 });
 
+window.addEventListener('scroll', function(event) {
+    
+  var d = document.documentElement;
+  var offset = d.scrollTop + window.innerHeight;
+  var height = d.offsetHeight;
+
+  console.log('offset = ' + offset);
+  console.log('height = ' + height);
+
+  if (offset >= height - 100) {
+      searchData.page += 1;
+      searchMovies(searchData.query, searchData.page);
+  }
+});
+
 function searchMovies(query, page = 1) {
     api.gethMovies(query, page)
         .then((movies) => {
-            moviesContainer.innerHTML = '';
             displayMovies(movies.Search);
         });
 }
