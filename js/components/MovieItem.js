@@ -1,3 +1,5 @@
+import Poster from './Poster.js';
+
 export default class MovieItem{
     constructor(id, image, title) {
         this.id = id;
@@ -7,15 +9,14 @@ export default class MovieItem{
 
     render() {
         const item = document.createElement('div');
-        const poster = new Image();
-        const title = document.createElement('h2');
+        const poster = new Poster(this.image).render();
+        const title = document.createElement('div');
 
         item.dataset.id = this.id;
         item.className = 'movie-item';
 
-        poster.src = this.image;
-
         title.textContent = this.title;
+        title.className = 'movie-title';
 
         item.append(poster, title);
 
