@@ -36,6 +36,10 @@ body.modal-open {
     border-radius: 20px;
 }
 
+.search-form button i {
+    margin-right: 10px;
+}
+
 @media (max-width: 450px) {
     .search-form {
         display: block;
