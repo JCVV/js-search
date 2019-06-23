@@ -44,5 +44,4 @@ export default class Detail{
         this.title.textContent = 'Error loading the info...';
         this.description.textContent = '';
     }
-
 }

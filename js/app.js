@@ -10,12 +10,13 @@ const loader = document.querySelector('.loader');
 const noResults = document.querySelector('.no-results');
 const detail = document.querySelector('.detail');
 const detailModal = new Detail(detail);
+const PAGE_SIZE = 10;
 
-const debounceScrollListener = util.debounce(scrollListener, 100);
+const debouncedScrollListener = util.debounce(scrollListener, 100);
 
 const searchData = {
     query: '',
-    page: 1,
+    nextPage: 1,
     total: 0,
     fetching: false
 }
@@ -24,7 +25,7 @@ form.addEventListener('submit', (event) => {
     const query = input.value;
 
     searchData.query = query;
-    searchData.page = 1;
+    searchData.nextPage = 1;
     searchData.total = 0;
 
     event.preventDefault();
@@ -57,30 +58,66 @@ function scrollListener() {
     const d = document.documentElement;
     const offset = d.scrollTop + window.innerHeight;
     const height = d.offsetHeight;
-    if (offset >= height - 100 && !searchData.fetching) {
-        searchData.page += 1;
-        searchMovies(searchData.query, searchData.page);
+
+    if (offset >= height - 100 && !searchData.fetching && searchData.hasNext) {
+        searchData.nextPage += 1;
+        searchMovies(searchData.query, searchData.nextPage);
     }
+}
+
+function addScrollListener() {
+    console.log('adding scroll listener');
+    window.addEventListener('scroll', debouncedScrollListener);
+}
+
+function removeScrollListener() {
+    console.log('removing scroll listener');
+    window.removeEventListener('scroll', debouncedScrollListener);
 }
 
 function searchMovies(query, page = 1) {
     searchData.fetching = true;
     showLoader();
     api.gethMovies(query, page)
-        .then(({ Search: results = [], totalResults = 0 }) => {
+        .then(({ Search: results = [], totalResults = 0, Response : response = 'False' }) => {
             hideLoader();
 
-            if (results.length) {
+            if (response === 'True') {
+                console.log('Response = true');
                 hideError();
                 displayMovies(results);
 
-                if (totalResults > 10 && page === 1) {
-                    window.addEventListener('scroll', debounceScrollListener);
+                searchData.hasNext = (page - 1) * PAGE_SIZE + results.length < totalResults;
+
+                if (page === 1) {
+                    searchData.totalResults = totalResults;
+                }
+
+                if(page === 1 && searchData.hasNext) {
+                    addScrollListener();
+                }
+
+                if(!searchData.hasNext) {
+                    removeScrollListener();
                 }
             } else {
                 showError();
-                window.removeEventListener('scroll', debounceScrollListener);
+                console.log('REMOVING scroll listenerrrrr');
+                window.removeEventListener('scroll', debouncedScrollListener);
             }
+        })
+        .catch(function () {
+            hideLoader();
+            
+            if(searchData.nextPage > 1) {
+                console.log(`Page ${searchData.nextPage} failed. Requesting it again.`);
+                searchData.nextPage -= 1;
+            } else {
+                console.log('Page 1 failed. try again.');
+                showNetworkError();
+            }
+        })
+        .finally(function() {
             searchData.fetching = false;
         });
 }
@@ -95,6 +132,11 @@ function displayMovies(movies) {
 
 function showError() {
     noResults.innerHTML = `Your search - ${searchData.query} - did not match any movie.`;
+    noResults.style.display = 'block';
+}
+
+function showNetworkError() {
+    noResults.innerHTML = `There was an error requesting the movies. Try again.`;
     noResults.style.display = 'block';
 }
 

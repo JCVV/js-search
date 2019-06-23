@@ -12,7 +12,6 @@ export default class Poster{
         
         poster.addEventListener('error', function() {
             poster.src = ERROR_IMG;
-            console.log('error loading image');
         });
 
         poster.addEventListener('load', function() {
