@@ -66,14 +66,26 @@ img {
     height: 100%;
 }
 
-img.loader {
-    width: 10%;
-    height: auto;
-    margin: 0 auto;
-    display: block;
+@keyframes spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+         transform: rotate(360deg);
+    }
 }
 
-img.loader.hidden {
+.loader i {
+    margin: 0 auto;
+    display: block;
+    color: #cccccc;
+    font-size: 64px;
+    width: 64px;
+    height: 64px;
+    animation: 2.5s linear infinite spinner;
+}
+
+.loader.hidden {
     display: none;
 }
 
@@ -139,13 +151,13 @@ img.loader.hidden {
     height: 100%;
     background-color: rgba(0,0,0,0.5);
     z-index: 1;
+    overflow-y: scroll;
 }
-
 
 .detail-modal {
     position: relative;
     width: 90%;
-    margin: 3em auto 0 auto;
+    margin: 3em auto 3em auto;
     padding-top: 68px;
     background-color: #262626;
     border-radius: 5px;
