@@ -1,6 +1,7 @@
 import api from './api.js';
 import MovieItem from './components/MovieItem.js';
 import Detail from './components/Detail.js';
+import util from './utils/util.js';
 
 const form = document.querySelector('.search-form');
 const input = document.querySelector('.search-input');
@@ -9,6 +10,8 @@ const loader = document.querySelector('.loader');
 const noResults = document.querySelector('.no-results');
 const detail = document.querySelector('.detail');
 const detailModal = new Detail(detail);
+
+const debounceScrollListener = util.debounce(scrollListener, 100);
 
 const searchData = {
     query: '',
@@ -28,8 +31,6 @@ form.addEventListener('submit', (event) => {
 
     if (query !== '') {
         moviesContainer.innerHTML = '';
-        loader.style.display = 'block';
-
         searchMovies(query);
     }
 });
@@ -52,11 +53,10 @@ moviesContainer.addEventListener('click', (event) => {
 });
 
 
-function scrollListener(event) {
+function scrollListener() {
     const d = document.documentElement;
     const offset = d.scrollTop + window.innerHeight;
     const height = d.offsetHeight;
-
     if (offset >= height - 100 && !searchData.fetching) {
         searchData.page += 1;
         searchMovies(searchData.query, searchData.page);
@@ -65,20 +65,21 @@ function scrollListener(event) {
 
 function searchMovies(query, page = 1) {
     searchData.fetching = true;
+    showLoader();
     api.gethMovies(query, page)
         .then(({ Search: results = [], totalResults = 0 }) => {
-            loader.style.display = 'none';
+            hideLoader();
 
             if (results.length) {
                 hideError();
                 displayMovies(results);
 
                 if (totalResults > 10 && page === 1) {
-                    window.addEventListener('scroll', scrollListener);
+                    window.addEventListener('scroll', debounceScrollListener);
                 }
             } else {
                 showError();
-                window.removeEventListener('scroll', scrollListener);
+                window.removeEventListener('scroll', debounceScrollListener);
             }
             searchData.fetching = false;
         });
@@ -100,4 +101,12 @@ function showError() {
 function hideError() {
     noResults.style.display = 'none';
     noResults.innerHTML = '';
+}
+
+function showLoader() {
+    loader.style.display = 'block';
+}
+
+function hideLoader() {
+    loader.style.display = 'none';
 }

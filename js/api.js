@@ -3,7 +3,7 @@ const API_KEY = 'cfb38312';
 
 export default {
     gethMovies(query, page = 1) {
-        const url = `${URL}?s=${query}&page=${page}&apikey=${API_KEY}`;
+        const url = `${URL}?s=${query}&page=${page}&type=movie&apikey=${API_KEY}`;
 
         return fetch(url)
             .then(response => response.json());
