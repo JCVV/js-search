@@ -175,6 +175,10 @@ img {
     margin: 0 auto;
 }
 
+.detail-modal .player.hidden {
+    display: none;
+}
+
 .detail-modal .close-button {
     position: absolute;
     font-size: 1.7em;
