@@ -24,22 +24,27 @@
                 <button class="search-button" type="submit"><i class="fa fa-search"></i></button>
             </form>
         </section>
-        
-        <section class="detail detail-overlay hidden">
-            <div class="detail-modal">
-                <i class="fa fa-times close-button"></i>
-                <video id="player" class="hidden" src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" controls ></video>
-                <div class="metadata">
-                    <h2 class="title">Titulo</h2>
-                    <div class="description">Descripcion bla bla bla</div>
-                </div>
-            </div>
+
+        <section class="no-results">
+            Start typing to search movies...
         </section>
 
         <section class="movies-grid">
-            
         </section>
+
+        <section class="detail detail-overlay hidden">
+                <div class="detail-modal">
+                    <i class="fa fa-times close-button"></i>
+                    <video id="player" class="hidden" src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" controls ></video>
+                    <div class="metadata">
+                        <h2 class="title"></h2>
+                        <div class="description"></div>
+                    </div>
+                </div>
+            </section>
         
         <img class="loader" src="assets/loading.gif">
+
+
     </body>
 </html>

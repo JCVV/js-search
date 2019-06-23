@@ -9,6 +9,7 @@ export default class MovieItem{
 
     getElement() {
         const item = document.createElement('div');
+        const textContainer = document.createElement('div');
         const poster = new Poster(this.image).getElement();
         const title = document.createElement('div');
 
@@ -18,7 +19,10 @@ export default class MovieItem{
         title.textContent = this.title;
         title.className = 'movie-title';
 
-        item.append(poster, title);
+        textContainer.className = 'movie-text-container';
+
+        textContainer.append(title);
+        item.append(poster, textContainer);
 
         return item;
     }

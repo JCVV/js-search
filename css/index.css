@@ -43,12 +43,10 @@ body.modal-open {
         font-size: 1.2em;
         width: 100%;
     }
-    
     .search-form button {
         width: 100%;
         margin-left: 0px;
     }
-    
   }
 
 .movies-grid {
@@ -63,9 +61,13 @@ body.modal-open {
 
 img {
     width: 100%;
+    height: 100%;
 }
 
-.loader {
+img.loader {
+    width: 10%;
+    height: auto;
+    margin: 0 auto;
     display: none;
 }
 
@@ -85,9 +87,25 @@ img {
 .movie-item img.loaded {
     opacity: 1;
 }
+.movie-item .movie-text-container {
+    position: absolute;
+    width: 100%;
+    height: 30%;
+    bottom: 0;
+    pointer-events: none;
+    background: rgba(0,0,0,0);
+    background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.85) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(0,0,0,0)), color-stop(100%, rgba(0,0,0,0.85)));
+    background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.85) 100%);
+    background: -o-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.85) 100%);
+    background: -ms-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.85) 100%);
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.85) 100%);
+}
 
-.movie-item .movie-title {
+.movie-item .movie-text-container .movie-title {
     font-size: 20px;
+    padding: 0 10px;
+    box-sizing: border-box;
     pointer-events: none;
     position: absolute;
     bottom: 20px;
@@ -97,6 +115,11 @@ img {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;  
+}
+
+.no-results {
+    color: #eeeeee;
+    text-align: center;
 }
 
 .detail {
@@ -114,21 +137,24 @@ img {
     position: relative;
     width: 90%;
     margin: 3em auto 0 auto;
-    padding-top: 50px;
+    padding-top: 68px;
     background-color: #262626;
     border-radius: 5px;
+    max-width: 990px;
 }
 
 video {
-    width: 94%;
+    width: 84%;
     display: block;
     margin: 0 auto;
 }
 
 .detail-modal .close-button {
     position: absolute;
+    font-size: 1.7em;
     right: 25px;
-    top: 15px;
+    top: 20px;
+    color: #eeeeee;
 }
 
 .detail-modal .metadata {

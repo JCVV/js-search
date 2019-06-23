@@ -37,11 +37,12 @@ export default class Detail{
         this.title.textContent = title;
         this.description.textContent = description;
         this.player.classList.remove('hidden');
+        this.player.play();
     }
 
     setErrorData() {
-        this.title.textContent = title;
-        this.description.textContent = description;
+        this.title.textContent = 'Error loading the info...';
+        this.description.textContent = '';
     }
 
 }
