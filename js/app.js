@@ -42,6 +42,7 @@ form.addEventListener('submit', function (event) {
 
     if (query !== '') {
         moviesContainer.textContent = '';
+        noResults.textContent = '';
         searchMovies(query);
     }
 });
