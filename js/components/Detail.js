@@ -1,23 +1,28 @@
-export default class Detail{
+export default class Detail {
     constructor(element) {
         this.element = element;
         this.closeButton = element.querySelector('.close-button');
         this.title = element.querySelector('.title');
+        this.extraInfo = element.querySelector('.extra-info');
         this.description = element.querySelector('.description');
-        this.player = element.querySelector('#player');
+        this.player = element.querySelector('.player');
 
         this.setListeners();
     }
 
     setListeners() {
-        this.closeButton.addEventListener('click', () => {
-            this.close();
-        });
+        this.element.addEventListener('click', (event) => {
+            const target = event.target;
+
+            if (target === this.closeButton || target === this.element) {
+                this.close();
+            }
+        })
     }
 
     close() {
-        this.element.classList.add('hidden');
         document.body.classList.remove('modal-open');
+        this.element.classList.add('hidden');
         this.player.load();
         this.resetData();
     }
@@ -30,12 +35,19 @@ export default class Detail{
     resetData() {
         this.title.textContent = 'Loading...';
         this.description.textContent = '';
+        this.extraInfo.textContent = '';
         this.player.classList.add('hidden');
     }
 
-    setData(title, description) {
+    setData({
+        Title: title,
+        Plot: plot,
+        Year: year,
+        Language: language
+    }) {
         this.title.textContent = title;
-        this.description.textContent = description;
+        this.description.textContent = plot;
+        this.extraInfo.textContent = `Year: ${year} | Language: ${language}`;
         this.player.classList.remove('hidden');
         this.player.play();
     }

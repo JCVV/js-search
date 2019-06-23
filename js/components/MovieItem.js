@@ -1,7 +1,7 @@
 import Poster from './Poster.js';
 
 export default class MovieItem{
-    constructor(id, image, title) {
+    constructor({ imdbID: id, Poster: image, Title: title }) {
         this.id = id;
         this.image = image;
         this.title = title;

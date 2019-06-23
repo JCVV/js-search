@@ -26,12 +26,14 @@ body.modal-open {
     padding: 0.35em 0.75em;
     font-size: 1.2em;
     flex: 2 0;
+    border-radius: 20px;
 }
 
 .search-form button {
     flex: 1 0;
     font-size: 1.7em;
     margin-left: 20px;
+    border-radius: 20px;
 }
 
 @media (max-width: 450px) {
@@ -81,7 +83,10 @@ img.loader {
 .movie-item img {
     pointer-events: none;
     opacity: 0;
-    transition: opacity 0.7s;
+    -moz-transition: opacity 1s;
+    -webkit-transition: opacity 1s;
+    -o-transition: opacity 1s;
+    transition: opacity 1s;
 }
 
 .movie-item img.loaded {
@@ -141,9 +146,10 @@ img.loader {
     background-color: #262626;
     border-radius: 5px;
     max-width: 990px;
+    min-width: 450px;
 }
 
-video {
+.detail-modal .player {
     width: 84%;
     display: block;
     margin: 0 auto;
@@ -163,6 +169,10 @@ video {
 
 .detail-modal .metadata h2 {
     color: #eeeeee;
+}
+
+.detail-modal .metadata h4 {
+    color: #dddddd;
 }
 
 .detail-modal .metadata .description {
