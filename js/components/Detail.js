@@ -10,6 +10,11 @@ export default class Detail {
         this.setListeners();
     }
 
+    /**
+     * Method to add the click listeners to close the window
+     * by event delegation when clicking the close button 
+     * or in the outside part of the modal.
+     */
     setListeners() {
         this.element.addEventListener('click', (event) => {
             const target = event.target;
@@ -39,6 +44,11 @@ export default class Detail {
         this.player.classList.add('hidden');
     }
 
+    /**
+     * Method to update the view with the movie info.
+     * Using renaming vars in order to not use variables with capital letters.
+     * @param {Object} param0 Movie object
+     */
     setData({
         Title: title,
         Plot: plot,

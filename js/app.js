@@ -17,6 +17,10 @@ const detailModal = new Detail(detail);
 
 const debouncedScrollListener = util.debounce(scrollListener, 100);
 
+/**
+ * Object to keep track of the page count, results, query and if the
+ * page request finished or its waiting.
+ */
 const searchData = {
     query: '',
     nextPage: 1,
@@ -24,6 +28,9 @@ const searchData = {
     fetching: false
 }
 
+/**
+ * Listener to start searching the movie results.
+ */
 form.addEventListener('submit', function (event) {
     const query = input.value;
 
@@ -39,6 +46,10 @@ form.addEventListener('submit', function (event) {
     }
 });
 
+/**
+ * listener that opens the detail view based 
+ * on the clicked movie Id by event delegation.
+ */
 moviesContainer.addEventListener('click', function (event) {
     const target = event.target;
     const movieId = target.dataset.id;
@@ -47,15 +58,20 @@ moviesContainer.addEventListener('click', function (event) {
         detailModal.open();
         api.getMovieInfo(movieId)
             .then(function (data) {
+                console.log('[Detail] MovieInfo data arrived. updating the detail view.');
                 detailModal.setData(data);
             })
             .catch(function () {
+                console.log('[Detail] MovieInfo data failed. updating the detail view with an error message.');
                 detailModal.setErrorData();
             });
     }
 });
 
-
+/**
+ * Scroll Listener to search the next movies page when the user
+ * is arriving to the bottom of the scroll.
+ */
 function scrollListener() {
     const d = document.documentElement;
     const offset = d.scrollTop + window.innerHeight;
@@ -66,24 +82,35 @@ function scrollListener() {
     }
 }
 
+/**
+ * Method to add the debounced scroll listener to the window.
+ */
 function addScrollListener() {
-    console.log('adding scroll listener');
+    console.log('[Scroll Pagination] adding scroll listener');
     window.addEventListener('scroll', debouncedScrollListener);
 }
 
+/**
+ * Method to remove the debounced scroll listener to the window.
+ */
 function removeScrollListener() {
-    console.log('removing scroll listener');
+    console.log('[Scroll Pagination] removing scroll listener');
     window.removeEventListener('scroll', debouncedScrollListener);
 }
 
+/**
+ * Method to request the movies with some basic error handling.
+ * @param {String} query Query string to search
+ * @param {Number} page Page number to request
+ */
 function searchMovies(query, page = 1) {
     searchData.fetching = true;
     showLoader();
+
     api.gethMovies(query, page)
         .then(function ({ Search: results = [], totalResults = 0, Response: response = 'False' }) {
-
             if (response === 'True') {
-                console.log('Response = true');
+                console.log(`[Search] Results page ${page} ready to be painted.`);
                 hideError();
                 displayMovies(results);
 
@@ -101,18 +128,15 @@ function searchMovies(query, page = 1) {
                 }
             } else {
                 showError();
-                console.log('REMOVING scroll listenerrrrr');
-                window.removeEventListener('scroll', debouncedScrollListener);
+                removeScrollListener();
             }
         })
         .catch(function () {
-            hideLoader();
-
             if (searchData.nextPage === 1) {
-                console.log('Page 1 failed. Show error message and try again.');
+                console.log('[Search] Page 1 failed. Show error message and try again.');
                 showNetworkError();
             } else {
-                console.log(`Page ${searchData.nextPage} failed. Requesting it again.`);
+                console.log(`[Search] Page ${searchData.nextPage} failed. Requesting it again.`);
             }
         })
         .finally(function () {
@@ -121,33 +145,38 @@ function searchMovies(query, page = 1) {
         });
 }
 
+/**
+ * Method to pain a movies list in the moviesContainer
+ * @param {Array} movies movies array to be added to the movies result container.
+ */
 function displayMovies(movies) {
     movies.forEach(function (movie) {
         const item = new MovieItem(movie);
+        const htmlElement = item.getElement();
 
-        moviesContainer.appendChild(item.getElement());
+        moviesContainer.appendChild(htmlElement);
     });
 }
 
 function showError() {
     noResults.textContent = `Your search - ${searchData.query} - did not match any movie.`;
-    noResults.style.display = 'block';
+    noResults.classList.remove('hidden');
 }
 
 function showNetworkError() {
     noResults.textContent = `There was an error requesting the movies. Try again.`;
-    noResults.style.display = 'block';
+    noResults.classList.remove('hidden');
 }
 
 function hideError() {
-    noResults.style.display = 'none';
     noResults.textContent = '';
+    noResults.classList.add('hidden');
 }
 
 function showLoader() {
-    loader.style.display = 'block';
+    loader.classList.remove('hidden');
 }
 
 function hideLoader() {
-    loader.style.display = 'none';
+    loader.classList.add('hidden');
 }

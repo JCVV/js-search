@@ -1,49 +1,47 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Vanilla Test</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script type="module" src="js/app.js" async defer></script>
-        <link rel="stylesheet" href="css/index.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap">
-    </head>
-    <body>
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-        <section class="search">
-            <form class="search-form">
-                <input class="search-input" type="text" placeholder="Search...">
-                <button class="search-button" type="submit"><i class="fa fa-search"></i></button>
-            </form>
-        </section>
 
-        <section class="no-results">
-            Start typing to search movies...
-        </section>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Vanilla Test</title>
+    <meta name="description" content="Javascript test using Vanilla">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="module" src="js/app.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap">
+    <link rel="stylesheet" href="css/index.css">
+</head>
 
-        <section class="movies-grid">
-        </section>
+<body>
+    <section class="search">
+        <form class="search-form">
+            <input class="search-input" type="text" placeholder="Find movies...">
+            <button class="search-button" type="submit"><i class="fa fa-search"></i>Search</button>
+        </form>
+    </section>
 
-        <section class="detail detail-overlay hidden">
-                <div class="detail-modal">
-                    <i class="fa fa-times close-button"></i>
-                    <video class="player hidden" src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" controls ></video>
-                    <div class="metadata">
-                        <h2 class="title"></h2>
-                        <h4 class="extra-info"></h4>
-                        <div class="description"></div>
-                    </div>
-                </div>
-            </section>
-        
-        <img class="loader" src="assets/loading.gif">
-    </body>
+    <section class="no-results">
+        Start typing to search movies...
+    </section>
+
+    <section class="movies-grid">
+    </section>
+
+    <section class="detail detail-overlay hidden">
+        <div class="detail-modal">
+            <i class="fa fa-times close-button"></i>
+            <video class="player hidden"
+                src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                controls></video>
+            <div class="metadata">
+                <h2 class="title"></h2>
+                <h4 class="extra-info"></h4>
+                <div class="description"></div>
+            </div>
+        </div>
+    </section>
+
+    <img class="loader hidden" src="assets/loading.gif">
+</body>
+
 </html>
