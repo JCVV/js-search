@@ -8,6 +8,7 @@ export default class Detail {
         this.player = element.querySelector('.player');
 
         this.setListeners();
+        this.resetData();
     }
 
     /**
